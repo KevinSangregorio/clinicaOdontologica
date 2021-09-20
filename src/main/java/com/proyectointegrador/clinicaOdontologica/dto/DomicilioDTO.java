@@ -11,6 +11,9 @@ public class DomicilioDTO implements Serializable {
     private String localidad;
     private String provincia;
 
+    public DomicilioDTO() {
+    }
+
     public Integer getId() {
         return id;
     }

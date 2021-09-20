@@ -7,27 +7,34 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.apache.log4j.Logger;
 
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
+
+    final static Logger log = Logger.getLogger(OdontologoController.class);
 
     @Autowired
     OdontologoServiceImpl odontologoService;
 
     @PostMapping("/guardar")
     public ResponseEntity<OdontologoDTO> registrarOdontologo(@RequestBody OdontologoDTO o) {
+        log.debug("Registrando el odontólogo con id: " + o.getId());
         return ResponseEntity.ok(odontologoService.guardar(o));
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<OdontologoDTO> buscarPorId(@PathVariable Integer id) {
+        log.debug("Buscando el odontólogo con id: " + id);
         ResponseEntity<OdontologoDTO> response = null;
 
         if (odontologoService.buscarPorId(id) != null) {
             response = ResponseEntity.ok(odontologoService.buscarPorId(id));
+            log.info("Odontólogo con id: " + id + " encontrado!");
         } else {
             response = ResponseEntity.notFound().build();
+            log.info("Odontólogo con id: " + id + " no encontrado!");
         }
 
         return response;
@@ -35,16 +42,20 @@ public class OdontologoController {
 
     @GetMapping("/buscarTodos")
     public ResponseEntity<List<OdontologoDTO>> buscarTodos(){
+        log.debug("Buscando todos los odontólogos...");
         return ResponseEntity.ok(odontologoService.buscarTodos());
     }
 
     @PutMapping("/actualizar")
     public ResponseEntity<OdontologoDTO> actualizar(@RequestBody OdontologoDTO o) {
+        log.debug("Actualizando el odontólogo con id: " + o.getId());
         ResponseEntity<OdontologoDTO> response = null;
         if (odontologoService.actualizar(o) != null) {
             response = ResponseEntity.ok(odontologoService.actualizar(o));
+            log.info("Odontólogo con id: " + o.getId() + " actualizado!");
         } else {
             response = ResponseEntity.notFound().build();
+            log.info("Odontólogo con id: " + o.getId() + " no encontrado!");
         }
 
         return response;
@@ -52,13 +63,16 @@ public class OdontologoController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id) {
+        log.debug("Eliminando odontólogo con id: " + id);
         ResponseEntity<String> response = null;
 
         if (odontologoService.buscarPorId(id) != null) {
             odontologoService.eliminar(id);
             response = ResponseEntity.ok("Odontólogo con id " + id + " eliminado.");
+            log.info("Odontólogo con id: " + id + " eliminado!");
         } else {
             response = ResponseEntity.notFound().build();
+            log.info("Odontólogo con id: " + id + " no encontrado!");
         }
 
         return response;

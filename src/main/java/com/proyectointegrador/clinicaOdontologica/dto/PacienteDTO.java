@@ -3,6 +3,8 @@ package com.proyectointegrador.clinicaOdontologica.dto;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Odontologo;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Paciente;
 
+import javax.persistence.Column;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -11,6 +13,9 @@ public class PacienteDTO implements Serializable {
     private String nombre;
     private String apellido;
     private LocalDate fechaIngreso;
+
+    public PacienteDTO() {
+    }
 
     public Integer getId() {
         return id;

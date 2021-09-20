@@ -1,19 +1,17 @@
 package com.proyectointegrador.clinicaOdontologica.service.Impl;
 
-import com.proyectointegrador.clinicaOdontologica.dto.DomicilioDTO;
 import com.proyectointegrador.clinicaOdontologica.dto.PacienteDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Paciente;
 import com.proyectointegrador.clinicaOdontologica.persistence.repositories.IPacienteRepository;
 import com.proyectointegrador.clinicaOdontologica.service.IService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PacienteServiceImpl implements IService<PacienteDTO> {
-
-    final static Logger log = Logger.getLogger(OdontologoServiceImpl.class);
 
     private final IPacienteRepository pacienteRepository;
 
