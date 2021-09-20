@@ -17,7 +17,6 @@ public class Domicilio {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "domicilio_sequence")
     private Integer id;
 
-
     private String calle;
     private String numero;
     private String localidad;

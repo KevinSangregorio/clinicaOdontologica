@@ -1,6 +1,5 @@
-package com.proyectointegrador.clinicaOdontologica.util;
+package com.proyectointegrador.clinicaOdontologica;
 
-import com.proyectointegrador.clinicaOdontologica.persistence.entities.Paciente;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

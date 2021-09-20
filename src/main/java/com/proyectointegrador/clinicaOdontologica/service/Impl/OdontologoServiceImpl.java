@@ -26,10 +26,7 @@ public class OdontologoServiceImpl implements IService<OdontologoDTO> {
 
     @Override
     public OdontologoDTO guardar(OdontologoDTO o) {
-        Odontologo oD = odontologoRepository.save(o.toEntity());
-        log.debug(oD);
-        //return new OdontologoDTO(odontologoRepository.save(o.toEntity()));
-        return new OdontologoDTO(oD);
+        return new OdontologoDTO(odontologoRepository.save(o.toEntity()));
     }
 
     @Override
@@ -44,7 +41,6 @@ public class OdontologoServiceImpl implements IService<OdontologoDTO> {
         for(Odontologo o : odontologoRepository.findAll()){
             odontologos.add(new OdontologoDTO(o));
         }
-
         return odontologos;
     }
 
@@ -60,12 +56,5 @@ public class OdontologoServiceImpl implements IService<OdontologoDTO> {
     @Override
     public void eliminar(Integer id) {
         odontologoRepository.deleteById(id);
-    }
-
-    public static void main(String[] args) {
-        OdontologoDTO oDTO = new OdontologoDTO(new Odontologo("Kevin","Sangregorio",12737));
-
-
-
     }
 }
