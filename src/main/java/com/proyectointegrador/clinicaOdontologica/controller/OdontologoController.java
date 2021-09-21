@@ -20,13 +20,14 @@ public class OdontologoController {
 
     @PostMapping("/guardar")
     public ResponseEntity<OdontologoDTO> registrarOdontologo(@RequestBody OdontologoDTO o) {
-        log.debug("Registrando el odontólogo con id: " + o.getId());
-        return ResponseEntity.ok(odontologoService.guardar(o));
+        OdontologoDTO response = odontologoService.guardar(o);
+        log.debug("Registrando el odontólogo con id: " + response.getId());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<OdontologoDTO> buscarPorId(@PathVariable Integer id) {
-        log.debug("Buscando el odontólogo con id: " + id);
+        log.debug("Iniciando método 'buscar por id' de odontólogo...");
         ResponseEntity<OdontologoDTO> response = null;
 
         if (odontologoService.buscarPorId(id) != null) {
@@ -48,7 +49,7 @@ public class OdontologoController {
 
     @PutMapping("/actualizar")
     public ResponseEntity<OdontologoDTO> actualizar(@RequestBody OdontologoDTO o) {
-        log.debug("Actualizando el odontólogo con id: " + o.getId());
+        log.debug("Iniciando método 'actualizar' de odontólogo...");
         ResponseEntity<OdontologoDTO> response = null;
         if (odontologoService.actualizar(o) != null) {
             response = ResponseEntity.ok(odontologoService.actualizar(o));
@@ -63,7 +64,7 @@ public class OdontologoController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id) {
-        log.debug("Eliminando odontólogo con id: " + id);
+        log.debug("Iniciando método 'eliminar' de odontólogo...");
         ResponseEntity<String> response = null;
 
         if (odontologoService.buscarPorId(id) != null) {

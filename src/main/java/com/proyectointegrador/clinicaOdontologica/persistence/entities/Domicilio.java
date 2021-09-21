@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -22,8 +23,9 @@ public class Domicilio {
     private String localidad;
     private String provincia;
 
-    @OneToMany(mappedBy = "domicilio")
-    private Set<Paciente> pacientes;
+    @OneToMany(mappedBy = "domicilio", fetch = FetchType.LAZY)
+    private Set<Paciente> pacientes = new HashSet<>();
+
 
     public Domicilio() {}
 

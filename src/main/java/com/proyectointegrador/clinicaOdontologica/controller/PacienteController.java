@@ -20,13 +20,14 @@ public class PacienteController {
 
     @PostMapping("/guardar")
     public ResponseEntity<PacienteDTO> registrarPaciente(@RequestBody PacienteDTO p) {
-        log.debug("Registrando el domicilio con id: " + p.getId());
-        return ResponseEntity.ok(pacienteService.guardar(p));
+        PacienteDTO response = pacienteService.guardar(p);
+        log.debug("Registrando el domicilio con id: " + response.getId());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<PacienteDTO> buscarPorId(@PathVariable Integer id) {
-        log.debug("Buscando el paciente con id: " + id);
+        log.debug("Iniciando método 'buscar por id' de paciente...");
         ResponseEntity<PacienteDTO> response = null;
 
         if (pacienteService.buscarPorId(id) != null) {
@@ -48,7 +49,7 @@ public class PacienteController {
 
     @PutMapping("/actualizar")
     public ResponseEntity<PacienteDTO> actualizar(@RequestBody PacienteDTO p) {
-        log.debug("Actualizando el paciente con id: " + p.getId());
+        log.debug("Iniciando método 'actualizar' de paciente...");
         ResponseEntity<PacienteDTO> response = null;
         if (pacienteService.actualizar(p) != null) {
             response = ResponseEntity.ok(pacienteService.actualizar(p));
@@ -63,7 +64,7 @@ public class PacienteController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id) {
-        log.debug("Eliminando paciente con id: " + id);
+        log.debug("Iniciando método 'eliminar' de paciente...");
         ResponseEntity<String> response = null;
 
         if (pacienteService.buscarPorId(id) != null) {
