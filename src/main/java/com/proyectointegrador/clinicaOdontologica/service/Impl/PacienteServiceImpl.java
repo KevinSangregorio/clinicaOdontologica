@@ -9,8 +9,7 @@ import com.proyectointegrador.clinicaOdontologica.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PacienteServiceImpl implements IService<PacienteDTO> {
@@ -35,24 +34,35 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
     }
 
     @Override
-    public PacienteDTO buscarPorId(Integer id) {
-        return new PacienteDTO(pacienteRepository.findById(id));
+    public PacienteDTO buscarPorId(Integer id) throws ResourceNotFoundException{
+        PacienteDTO pacienteDTO = null;
+        Optional<Paciente> paciente = pacienteRepository.findById(id);
+        if (!paciente.isPresent()) {
+          throw new ResourceNotFoundException("No se ha encontrado a ningún paciente con id: " + id);
+        } else {
+            pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
+        }
+        return pacienteDTO;
     }
 
     @Override
     public List<PacienteDTO> buscarTodos() {
-        List<PacienteDTO> pacientes = new ArrayList<>();
+        List<Paciente> pacientes = pacienteRepository.findAll();
+        List<PacienteDTO> pacientesDTO = new ArrayList<>();
 
-        for (Paciente p : pacienteRepository.findAll()) {
-            pacientes.add(new PacienteDTO(p));
+        for (Paciente paciente : pacientes) {
+            PacienteDTO pacienteDTO = mapper.convertValue(paciente, PacienteDTO.class);
+            pacientesDTO.add(pacienteDTO);
         }
-        return pacientes;
+        return pacientesDTO;
     }
 
     @Override
-    public void actualizar(PacienteDTO p) {
+    public void actualizar(PacienteDTO p) throws ResourceNotFoundException{
         Paciente paciente = mapper.convertValue(p, Paciente.class);
-        if (pacienteRepository.findById(p.getId()).isPresent()) {
+        if (!pacienteRepository.findById(p.getId()).isPresent()) {
+            throw new ResourceNotFoundException("No se encontró dicho paciente.");
+        } else {
             pacienteRepository.save(paciente);
         }
     }

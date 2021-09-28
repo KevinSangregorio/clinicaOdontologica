@@ -13,22 +13,6 @@ public class PacienteDTO implements Serializable {
     private String nombre;
     private String apellido;
     private LocalDate fechaIngreso;
+    private DomicilioDTO domicilio;
 
-    /*public PacienteDTO(Paciente p) {
-        this.id = p.getId();
-        this.nombre = p.getNombre();
-        this.apellido = p.getApellido();
-        this.fechaIngreso = p.getFechaIngreso();
-    }
-
-    public Paciente toEntity(){
-        Paciente entity = new Paciente();
-
-        entity.setId(id);
-        entity.setNombre(nombre);
-        entity.setApellido(apellido);
-        entity.setFechaIngreso(fechaIngreso);
-
-        return entity;
-    }*/
 }

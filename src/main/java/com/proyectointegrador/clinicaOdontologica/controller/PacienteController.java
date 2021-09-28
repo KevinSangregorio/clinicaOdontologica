@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -30,29 +32,21 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteDTO> buscarPorId(@PathVariable Integer id) {
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) throws ResourceNotFoundException {
         log.debug("Iniciando método 'buscarPorId()' de paciente...");
-        ResponseEntity<PacienteDTO> response = null;
-
-        if (pacienteService.buscarPorId(id) != null) {
-            response = ResponseEntity.ok(pacienteService.buscarPorId(id));
-            log.info("Paciente con id: " + id + " encontrado!");
-        } else {
-            response = ResponseEntity.notFound().build();
-            log.info("Paciente con id: " + id + " no encontrado!");
-        }
-
-        return response;
+        PacienteDTO respuesta = pacienteService.buscarPorId(id);
+        log.debug("Finalizando método 'buscarPorId()' de paciente...");
+        return ResponseEntity.ok().body(respuesta);
     }
 
     @GetMapping
-    public ResponseEntity<List<PacienteDTO>> buscarTodos(){
+    public ResponseEntity<Collection<PacienteDTO>> buscarTodos(){
         log.debug("Buscando todos los pacientes...");
         return ResponseEntity.ok(pacienteService.buscarTodos());
     }
 
     @PutMapping
-    public ResponseEntity<?> actualizar(@RequestBody PacienteDTO p) {
+    public ResponseEntity<?> actualizar(@RequestBody PacienteDTO p) throws ResourceNotFoundException {
         log.debug("Iniciando método 'actualizar' de paciente...");
 
         pacienteService.actualizar(p);
@@ -60,7 +54,7 @@ public class PacienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Integer id) {
+    public ResponseEntity<String> eliminar(@PathVariable Integer id) throws ResourceNotFoundException{
         log.debug("Iniciando método 'eliminar' de paciente...");
         ResponseEntity<String> response = null;
 

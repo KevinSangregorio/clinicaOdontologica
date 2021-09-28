@@ -1,5 +1,6 @@
 package com.proyectointegrador.clinicaOdontologica.persistence.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,5 +30,6 @@ public class Paciente {
     private Domicilio domicilio;
 
     @OneToMany(mappedBy = "paciente")
+    @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
 }

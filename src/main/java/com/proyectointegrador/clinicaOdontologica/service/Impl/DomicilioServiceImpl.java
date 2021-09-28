@@ -51,7 +51,7 @@ public class DomicilioServiceImpl implements IService<DomicilioDTO> {
     }
 
     @Override
-    public DomicilioDTO actualizar(DomicilioDTO d) {
+    public void actualizar(DomicilioDTO d) {
         Domicilio actualizado = null;
         if (domicilioRepository.findById(d.getId()).isPresent()) {
             actualizado = domicilioRepository.save(d.toEntity());

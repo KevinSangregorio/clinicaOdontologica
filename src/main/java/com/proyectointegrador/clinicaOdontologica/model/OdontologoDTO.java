@@ -11,22 +11,4 @@ public class OdontologoDTO implements Serializable {
     private String apellido;
     private Integer matricula;
 
-
-    /*public OdontologoDTO(Odontologo o) {
-        this.id = o.getId();
-        this.nombre = o.getNombre();
-        this.apellido = o.getApellido();
-        this.matricula = o.getMatricula();
-    }
-
-    public Odontologo toEntity(){
-        Odontologo entity = new Odontologo();
-
-        entity.setId(id);
-        entity.setApellido(apellido);
-        entity.setNombre(nombre);
-        entity.setMatricula(matricula);
-
-        return entity;
-    }*/
 }
