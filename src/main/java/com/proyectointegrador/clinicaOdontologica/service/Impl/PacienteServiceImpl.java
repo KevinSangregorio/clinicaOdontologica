@@ -1,5 +1,7 @@
 package com.proyectointegrador.clinicaOdontologica.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proyectointegrador.clinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.proyectointegrador.clinicaOdontologica.model.PacienteDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Paciente;
 import com.proyectointegrador.clinicaOdontologica.persistence.repositories.IPacienteRepository;
@@ -14,16 +16,22 @@ import java.util.List;
 public class PacienteServiceImpl implements IService<PacienteDTO> {
 
     private final IPacienteRepository pacienteRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public PacienteServiceImpl(IPacienteRepository pacienteRepository) {
+    public PacienteServiceImpl(IPacienteRepository pacienteRepository, ObjectMapper mapper) {
         this.pacienteRepository = pacienteRepository;
+        this.mapper = mapper;
     }
 
 
     @Override
-    public PacienteDTO guardar(PacienteDTO p) {
-        return new PacienteDTO(pacienteRepository.save(p.toEntity()));
+    public void guardar(PacienteDTO p) throws ResourceNotFoundException{
+        if (p == null) {
+            throw new ResourceNotFoundException("Error al querer ingresar un paciente null");
+        }
+        Paciente paciente = mapper.convertValue(p, Paciente.class);
+        pacienteRepository.save(paciente);
     }
 
     @Override
@@ -42,12 +50,11 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
     }
 
     @Override
-    public PacienteDTO actualizar(PacienteDTO p) {
-        Paciente actualizado = null;
+    public void actualizar(PacienteDTO p) {
+        Paciente paciente = mapper.convertValue(p, Paciente.class);
         if (pacienteRepository.findById(p.getId()).isPresent()) {
-            actualizado = pacienteRepository.save(p.toEntity());
+            pacienteRepository.save(paciente);
         }
-        return new PacienteDTO(actualizado);
     }
 
     @Override

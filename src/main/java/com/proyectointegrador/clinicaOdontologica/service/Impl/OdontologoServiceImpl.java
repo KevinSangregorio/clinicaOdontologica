@@ -1,5 +1,7 @@
 package com.proyectointegrador.clinicaOdontologica.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proyectointegrador.clinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.proyectointegrador.clinicaOdontologica.model.OdontologoDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Odontologo;
 import com.proyectointegrador.clinicaOdontologica.persistence.repositories.IOdontologoRepository;
@@ -14,16 +16,22 @@ import java.util.List;
 public class OdontologoServiceImpl implements IService<OdontologoDTO> {
 
     private final IOdontologoRepository odontologoRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public OdontologoServiceImpl(IOdontologoRepository odontologoRepository) {
+    public OdontologoServiceImpl(IOdontologoRepository odontologoRepository, ObjectMapper mapper) {
         this.odontologoRepository = odontologoRepository;
+        this.mapper = mapper;
     }
 
 
     @Override
-    public OdontologoDTO guardar(OdontologoDTO o) {
-        return new OdontologoDTO(odontologoRepository.save(o.toEntity()));
+    public void guardar(OdontologoDTO o) throws ResourceNotFoundException {
+        if (o == null) {
+            throw new ResourceNotFoundException("Error al querer ingresar un odontologo null");
+        }
+        Odontologo odontologo = mapper.convertValue(o, Odontologo.class);
+        odontologoRepository.save(odontologo);
     }
 
     @Override
@@ -42,12 +50,11 @@ public class OdontologoServiceImpl implements IService<OdontologoDTO> {
     }
 
     @Override
-    public OdontologoDTO actualizar(OdontologoDTO o) {
-        Odontologo actualizado = null;
+    public void actualizar(OdontologoDTO o) {
+        Odontologo odontologo = mapper.convertValue(o, Odontologo.class);
         if (odontologoRepository.findById(o.getId()).isPresent()) {
-            actualizado = odontologoRepository.save(o.toEntity());
+          odontologoRepository.save(odontologo);
         }
-        return new OdontologoDTO(actualizado);
     }
 
     @Override

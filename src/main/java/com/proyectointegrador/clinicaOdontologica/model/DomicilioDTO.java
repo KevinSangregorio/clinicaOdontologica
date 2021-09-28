@@ -13,7 +13,7 @@ public class DomicilioDTO implements Serializable {
     private String provincia;
 
 
-    public DomicilioDTO(Domicilio d) {
+    /*public DomicilioDTO(Domicilio d) {
         id = d.getId();
         calle = d.getCalle();
         numero = d.getNumero();
@@ -31,5 +31,5 @@ public class DomicilioDTO implements Serializable {
         entity.setNumero(numero);
 
         return entity;
-    }
+    }*/
 }

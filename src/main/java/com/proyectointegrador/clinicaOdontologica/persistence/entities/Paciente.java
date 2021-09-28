@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,4 +27,7 @@ public class Paciente {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domicilio_id", nullable = false)
     private Domicilio domicilio;
+
+    @OneToMany(mappedBy = "paciente")
+    private Set<Turno> turnos = new HashSet<>();
 }

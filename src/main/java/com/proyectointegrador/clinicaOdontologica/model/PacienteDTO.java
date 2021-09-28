@@ -14,7 +14,7 @@ public class PacienteDTO implements Serializable {
     private String apellido;
     private LocalDate fechaIngreso;
 
-    public PacienteDTO(Paciente p) {
+    /*public PacienteDTO(Paciente p) {
         this.id = p.getId();
         this.nombre = p.getNombre();
         this.apellido = p.getApellido();
@@ -30,5 +30,5 @@ public class PacienteDTO implements Serializable {
         entity.setFechaIngreso(fechaIngreso);
 
         return entity;
-    }
+    }*/
 }

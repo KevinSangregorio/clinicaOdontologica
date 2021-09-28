@@ -1,8 +1,10 @@
 package com.proyectointegrador.clinicaOdontologica.controller;
 
+import com.proyectointegrador.clinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.proyectointegrador.clinicaOdontologica.model.OdontologoDTO;
 import com.proyectointegrador.clinicaOdontologica.service.Impl.OdontologoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +20,16 @@ public class OdontologoController {
     @Autowired
     OdontologoServiceImpl odontologoService;
 
-    @PostMapping("/guardar")
-    public ResponseEntity<OdontologoDTO> registrarOdontologo(@RequestBody OdontologoDTO o) {
-        OdontologoDTO response = odontologoService.guardar(o);
-        log.debug("Registrando el odontólogo con id: " + response.getId());
-        return ResponseEntity.ok(response);
+    @PostMapping
+    public ResponseEntity<?> registrar(@RequestBody OdontologoDTO o) throws ResourceNotFoundException {
+        log.debug("Iniciando método 'registrar()' de odontólogo...");
+        odontologoService.guardar(o);
+
+        log.debug("Finalizando método 'registrar()' de odontólogo...");
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @GetMapping("/buscar/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<OdontologoDTO> buscarPorId(@PathVariable Integer id) {
         log.debug("Iniciando método 'buscar por id' de odontólogo...");
         ResponseEntity<OdontologoDTO> response = null;
@@ -41,13 +45,13 @@ public class OdontologoController {
         return response;
     }
 
-    @GetMapping("/buscarTodos")
+    @GetMapping
     public ResponseEntity<List<OdontologoDTO>> buscarTodos(){
         log.debug("Buscando todos los odontólogos...");
         return ResponseEntity.ok(odontologoService.buscarTodos());
     }
 
-    @PutMapping("/actualizar")
+    @PutMapping
     public ResponseEntity<OdontologoDTO> actualizar(@RequestBody OdontologoDTO o) {
         log.debug("Iniciando método 'actualizar' de odontólogo...");
         ResponseEntity<OdontologoDTO> response = null;
@@ -62,7 +66,7 @@ public class OdontologoController {
         return response;
     }
 
-    @DeleteMapping("/eliminar/{id}")
+    @DeleteMapping
     public ResponseEntity<String> eliminar(@PathVariable Integer id) {
         log.debug("Iniciando método 'eliminar' de odontólogo...");
         ResponseEntity<String> response = null;

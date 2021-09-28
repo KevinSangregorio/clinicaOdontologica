@@ -12,7 +12,7 @@ public class OdontologoDTO implements Serializable {
     private Integer matricula;
 
 
-    public OdontologoDTO(Odontologo o) {
+    /*public OdontologoDTO(Odontologo o) {
         this.id = o.getId();
         this.nombre = o.getNombre();
         this.apellido = o.getApellido();
@@ -28,5 +28,5 @@ public class OdontologoDTO implements Serializable {
         entity.setMatricula(matricula);
 
         return entity;
-    }
+    }*/
 }

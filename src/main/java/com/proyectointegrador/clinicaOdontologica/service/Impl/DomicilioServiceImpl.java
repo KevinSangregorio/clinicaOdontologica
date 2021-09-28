@@ -1,5 +1,7 @@
 package com.proyectointegrador.clinicaOdontologica.service.Impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proyectointegrador.clinicaOdontologica.exceptions.ResourceNotFoundException;
 import com.proyectointegrador.clinicaOdontologica.model.DomicilioDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Domicilio;
 import com.proyectointegrador.clinicaOdontologica.persistence.repositories.IDomicilioRepository;
@@ -15,16 +17,22 @@ public class DomicilioServiceImpl implements IService<DomicilioDTO> {
 
 
     private final IDomicilioRepository domicilioRepository;
+    private final ObjectMapper mapper;
 
     @Autowired
-    public DomicilioServiceImpl(IDomicilioRepository domicilioRepository) {
+    public DomicilioServiceImpl(IDomicilioRepository domicilioRepository, ObjectMapper mapper) {
         this.domicilioRepository = domicilioRepository;
+        this.mapper = mapper;
     }
 
 
     @Override
-    public DomicilioDTO guardar(DomicilioDTO d) {
-        return new DomicilioDTO(domicilioRepository.save(d.toEntity()));
+    public void guardar(DomicilioDTO d) throws ResourceNotFoundException {
+        if (d == null) {
+            throw new ResourceNotFoundException("Error al querer ingresar un domicilio null");
+        }
+        Domicilio domicilio = mapper.convertValue(d, Domicilio.class);
+        domicilioRepository.save(domicilio);
     }
 
     @Override

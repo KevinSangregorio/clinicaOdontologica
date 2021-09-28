@@ -2,6 +2,8 @@ package com.proyectointegrador.clinicaOdontologica.persistence.entities;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,21 +20,6 @@ public class Odontologo {
     private String apellido;
     private Integer matricula;
 
-    public Odontologo() {};
-
-    public Odontologo(String nombre, String apellido, Integer matricula) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.matricula = matricula;
-    }
-
-    @Override
-    public String toString() {
-        return "Odontologo{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", matricula=" + matricula +
-                '}';
-    }
+    @OneToMany(mappedBy = "odontologo")
+    private Set<Turno> turnos = new HashSet<>();
 }
