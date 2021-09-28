@@ -1,45 +1,16 @@
-package com.proyectointegrador.clinicaOdontologica.dto;
+package com.proyectointegrador.clinicaOdontologica.model;
 
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Odontologo;
-
+import lombok.Data;
 import java.io.Serializable;
 
+@Data
 public class OdontologoDTO implements Serializable {
     private Integer id;
     private String nombre;
     private String apellido;
     private Integer matricula;
 
-    public OdontologoDTO() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public Integer getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(Integer matricula) {
-        this.matricula = matricula;
-    }
 
     public OdontologoDTO(Odontologo o) {
         this.id = o.getId();

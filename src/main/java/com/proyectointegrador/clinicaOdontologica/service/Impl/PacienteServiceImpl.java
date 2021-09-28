@@ -1,6 +1,6 @@
 package com.proyectointegrador.clinicaOdontologica.service.Impl;
 
-import com.proyectointegrador.clinicaOdontologica.dto.PacienteDTO;
+import com.proyectointegrador.clinicaOdontologica.model.PacienteDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Paciente;
 import com.proyectointegrador.clinicaOdontologica.persistence.repositories.IPacienteRepository;
 import com.proyectointegrador.clinicaOdontologica.service.IService;
@@ -28,7 +28,7 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
 
     @Override
     public PacienteDTO buscarPorId(Integer id) {
-        return new PacienteDTO(pacienteRepository.getById(id));
+        return new PacienteDTO(pacienteRepository.findById(id));
     }
 
     @Override

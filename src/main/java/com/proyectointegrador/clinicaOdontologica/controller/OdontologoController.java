@@ -1,6 +1,6 @@
 package com.proyectointegrador.clinicaOdontologica.controller;
 
-import com.proyectointegrador.clinicaOdontologica.dto.OdontologoDTO;
+import com.proyectointegrador.clinicaOdontologica.model.OdontologoDTO;
 import com.proyectointegrador.clinicaOdontologica.service.Impl.OdontologoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

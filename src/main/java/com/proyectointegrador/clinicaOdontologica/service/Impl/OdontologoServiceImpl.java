@@ -1,6 +1,6 @@
 package com.proyectointegrador.clinicaOdontologica.service.Impl;
 
-import com.proyectointegrador.clinicaOdontologica.dto.OdontologoDTO;
+import com.proyectointegrador.clinicaOdontologica.model.OdontologoDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Odontologo;
 import com.proyectointegrador.clinicaOdontologica.persistence.repositories.IOdontologoRepository;
 import com.proyectointegrador.clinicaOdontologica.service.IService;

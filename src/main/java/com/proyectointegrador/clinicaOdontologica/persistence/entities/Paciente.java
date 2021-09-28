@@ -22,7 +22,7 @@ public class Paciente {
     private String dni;
     private LocalDate fechaIngreso;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false) //La propiedad optional queda en false porque un paciente siempre debe tener un domicilio
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "domicilio_id", nullable = false)
     private Domicilio domicilio;
 }
