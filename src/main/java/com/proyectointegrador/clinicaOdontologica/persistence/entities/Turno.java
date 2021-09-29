@@ -19,7 +19,6 @@ public class Turno {
     private Integer id;
 
     private LocalDateTime fecha;
-    private LocalTime hora;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "paciente_id", nullable = false)

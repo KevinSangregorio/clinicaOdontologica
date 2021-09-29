@@ -9,15 +9,7 @@ import java.time.LocalTime;
 public class TurnoDTO {
     private Integer id;
     private LocalDateTime fecha;
-    private LocalTime hora;
     private PacienteDTO paciente;
     private OdontologoDTO odontologo;
 
-    /*public TurnoDTO(Turno t) {
-        id = t.getId();
-        fecha = t.getFecha();
-        hora = t.getHora();
-        paciente = new PacienteDTO(t.getPaciente());
-        odontologo = new OdontologoDTO(t.getOdontologo());
-    }*/
 }

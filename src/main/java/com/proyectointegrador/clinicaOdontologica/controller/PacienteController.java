@@ -26,7 +26,6 @@ public class PacienteController {
 
         log.debug("Finalizando método 'registrar()' de paciente...");
         return ResponseEntity.ok(HttpStatus.OK);
-        //return ResponseEntity.status(HttpStatus.OK).body(p);
     }
 
     @GetMapping("/{id}")

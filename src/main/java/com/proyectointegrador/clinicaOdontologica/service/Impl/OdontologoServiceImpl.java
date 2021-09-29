@@ -40,7 +40,7 @@ public class OdontologoServiceImpl implements IService<OdontologoDTO> {
         OdontologoDTO odontologoDTO = null;
         Optional<Odontologo> odontologo = odontologoRepository.findById(id);
         if (!odontologo.isPresent()) {
-            throw new ResourceNotFoundException("No se ha encontrado a ningún paciente con id: " + id);
+            throw new ResourceNotFoundException("No se ha encontrado a ningún odontólogo con id: " + id);
         } else {
             odontologoDTO = mapper.convertValue(odontologo, OdontologoDTO.class);
         }
