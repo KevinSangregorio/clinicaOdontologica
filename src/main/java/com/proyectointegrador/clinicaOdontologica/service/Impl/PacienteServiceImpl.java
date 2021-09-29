@@ -60,15 +60,21 @@ public class PacienteServiceImpl implements IService<PacienteDTO> {
     @Override
     public void actualizar(PacienteDTO p) throws ResourceNotFoundException{
         Paciente paciente = mapper.convertValue(p, Paciente.class);
-        if (!pacienteRepository.findById(p.getId()).isPresent()) {
+        if (p.getId() == null) {
+            throw new ResourceNotFoundException("Se necesita un id distinto de nulo para poder modificar el paciente");
+        } else if (!pacienteRepository.findById(p.getId()).isPresent()) {
             throw new ResourceNotFoundException("No se encontró dicho paciente.");
-        } else {
+        } else if (pacienteRepository.findById(p.getId()).isPresent()) {
             pacienteRepository.save(paciente);
         }
     }
 
     @Override
-    public void eliminar(Integer id) {
-        pacienteRepository.deleteById(id);
+    public void eliminar(Integer id) throws ResourceNotFoundException{
+        if (!pacienteRepository.findById(id).isPresent()) {
+            throw new ResourceNotFoundException("No se encontró dicho paciente.");
+        } else {
+            pacienteRepository.deleteById(id);
+        }
     }
 }

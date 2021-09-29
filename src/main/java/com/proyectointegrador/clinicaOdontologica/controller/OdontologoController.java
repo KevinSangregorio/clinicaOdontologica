@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.util.Collection;
 import org.apache.log4j.Logger;
 
 @RestController
@@ -30,56 +29,31 @@ public class OdontologoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OdontologoDTO> buscarPorId(@PathVariable Integer id) {
-        log.debug("Iniciando método 'buscar por id' de odontólogo...");
-        ResponseEntity<OdontologoDTO> response = null;
-
-        if (odontologoService.buscarPorId(id) != null) {
-            response = ResponseEntity.ok(odontologoService.buscarPorId(id));
-            log.info("Odontólogo con id: " + id + " encontrado!");
-        } else {
-            response = ResponseEntity.notFound().build();
-            log.info("Odontólogo con id: " + id + " no encontrado!");
-        }
-
-        return response;
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) throws ResourceNotFoundException {
+        log.debug("Iniciando método 'buscarPorId()' de odontólogo...");
+        OdontologoDTO respuesta = odontologoService.buscarPorId(id);
+        log.debug("Finalizando método 'buscarPorId()' de odontólogo...");
+        return ResponseEntity.ok().body(respuesta);
     }
 
     @GetMapping
-    public ResponseEntity<List<OdontologoDTO>> buscarTodos(){
+    public ResponseEntity<Collection<OdontologoDTO>> buscarTodos(){
         log.debug("Buscando todos los odontólogos...");
         return ResponseEntity.ok(odontologoService.buscarTodos());
     }
 
     @PutMapping
-    public ResponseEntity<OdontologoDTO> actualizar(@RequestBody OdontologoDTO o) {
-        log.debug("Iniciando método 'actualizar' de odontólogo...");
-        ResponseEntity<OdontologoDTO> response = null;
-        if (odontologoService.actualizar(o) != null) {
-            response = ResponseEntity.ok(odontologoService.actualizar(o));
-            log.info("Odontólogo con id: " + o.getId() + " actualizado!");
-        } else {
-            response = ResponseEntity.notFound().build();
-            log.info("Odontólogo con id: " + o.getId() + " no encontrado!");
-        }
-
-        return response;
+    public ResponseEntity<?> actualizar(@RequestBody OdontologoDTO o) {
+        log.debug("Iniciando método 'actualizar()' de odontólogo...");
+        odontologoService.actualizar(o);
+        log.debug("Finalizando método 'actualizar()' de odontólogo...");
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> eliminar(@PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Integer id) throws ResourceNotFoundException {
         log.debug("Iniciando método 'eliminar' de odontólogo...");
-        ResponseEntity<String> response = null;
-
-        if (odontologoService.buscarPorId(id) != null) {
-            odontologoService.eliminar(id);
-            response = ResponseEntity.ok("Odontólogo con id " + id + " eliminado.");
-            log.info("Odontólogo con id: " + id + " eliminado!");
-        } else {
-            response = ResponseEntity.notFound().build();
-            log.info("Odontólogo con id: " + id + " no encontrado!");
-        }
-
-        return response;
+        odontologoService.eliminar(id);
+        return ResponseEntity.ok("Odontólogo con id " + id + " eliminado.");
     }
 }

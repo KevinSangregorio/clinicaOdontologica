@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OdontologoServiceImpl implements IService<OdontologoDTO> {
@@ -35,18 +36,27 @@ public class OdontologoServiceImpl implements IService<OdontologoDTO> {
     }
 
     @Override
-    public OdontologoDTO buscarPorId(Integer id) {
-        return new OdontologoDTO(odontologoRepository.getById(id));
+    public OdontologoDTO buscarPorId(Integer id) throws ResourceNotFoundException{
+        OdontologoDTO odontologoDTO = null;
+        Optional<Odontologo> odontologo = odontologoRepository.findById(id);
+        if (!odontologo.isPresent()) {
+            throw new ResourceNotFoundException("No se ha encontrado a ningún paciente con id: " + id);
+        } else {
+            odontologoDTO = mapper.convertValue(odontologo, OdontologoDTO.class);
+        }
+        return odontologoDTO;
     }
 
     @Override
     public List<OdontologoDTO> buscarTodos() {
-        List<OdontologoDTO> odontologos = new ArrayList<>();
+        List<Odontologo> odontologos = odontologoRepository.findAll();
+        List<OdontologoDTO> odontologosDTO = new ArrayList<>();
 
-        for(Odontologo o : odontologoRepository.findAll()){
-            odontologos.add(new OdontologoDTO(o));
+        for(Odontologo odontologo : odontologos){
+            OdontologoDTO odontologoDTO = mapper.convertValue(odontologo, OdontologoDTO.class);
+            odontologosDTO.add(odontologoDTO);
         }
-        return odontologos;
+        return odontologosDTO;
     }
 
     @Override

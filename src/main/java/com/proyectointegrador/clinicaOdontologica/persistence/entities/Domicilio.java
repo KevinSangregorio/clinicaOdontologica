@@ -23,9 +23,6 @@ public class Domicilio {
     private String localidad;
     private String provincia;
 
-    @OneToMany(mappedBy = "domicilio", fetch = FetchType.LAZY)
-    private Set<Paciente> pacientes = new HashSet<>();
-
 
     public Domicilio() {}
 
