@@ -3,6 +3,7 @@ package com.proyectointegrador.clinicaOdontologica.service.Impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proyectointegrador.clinicaOdontologica.controller.OdontologoController;
 import com.proyectointegrador.clinicaOdontologica.exceptions.ResourceNotFoundException;
+import com.proyectointegrador.clinicaOdontologica.model.OdontologoDTO;
 import com.proyectointegrador.clinicaOdontologica.model.PacienteDTO;
 import com.proyectointegrador.clinicaOdontologica.model.TurnoDTO;
 import com.proyectointegrador.clinicaOdontologica.persistence.entities.Paciente;
@@ -91,6 +92,12 @@ public class TurnoServiceImpl implements ITurnoService<TurnoDTO> {
 
     @Override
     public void actualizar(TurnoDTO t) throws ResourceNotFoundException {
+        Integer pacienteDtoId = t.getPaciente().getId();
+        Integer odontologoDtoId = t.getOdontologo().getId();
+        PacienteDTO pacienteDTO = pacienteService.buscarPorId(pacienteDtoId);
+        OdontologoDTO odontologoDTO = odontologoService.buscarPorId(odontologoDtoId);
+        t.setPaciente(pacienteDTO);
+        t.setOdontologo(odontologoDTO);
         Turno turno = mapper.convertValue(t, Turno.class);
         if (t.getId() == null) {
             throw new ResourceNotFoundException("Se necesita un id distinto de nulo para poder modificar el turno");
@@ -108,5 +115,23 @@ public class TurnoServiceImpl implements ITurnoService<TurnoDTO> {
         } else {
             turnoRepository.deleteById(id);
         }
+    }
+
+    public List<Turno> buscarTurnosProxSemana() throws ResourceNotFoundException {
+        LocalDateTime hoy = LocalDateTime.now();
+        LocalDateTime proximaSemana = hoy.plusDays(7);
+        List<Turno> listaTodosTurnos = turnoRepository.findAll();
+        List<Turno> turnosProximaSemana = new ArrayList<>();
+        if (listaTodosTurnos.size() <= 0){
+            throw new ResourceNotFoundException("No hay turnos cargados.");
+        }
+        for (Turno turno:listaTodosTurnos){
+            if ((turno.getFecha().isBefore(proximaSemana) && turno.getFecha().isAfter(hoy)) || turno.getFecha().isEqual(hoy) || turno.getFecha().isEqual(proximaSemana)){
+                turnosProximaSemana.add(turno);
+            }
+        }
+        if (turnosProximaSemana.size()<=0)
+            throw new ResourceNotFoundException("No hay turnos agendados para la próxima semana.");
+        return turnosProximaSemana;
     }
 }

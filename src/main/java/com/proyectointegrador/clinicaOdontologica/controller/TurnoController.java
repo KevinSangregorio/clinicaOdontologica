@@ -1,7 +1,6 @@
 package com.proyectointegrador.clinicaOdontologica.controller;
 
 import com.proyectointegrador.clinicaOdontologica.exceptions.ResourceNotFoundException;
-import com.proyectointegrador.clinicaOdontologica.model.PacienteDTO;
 import com.proyectointegrador.clinicaOdontologica.model.TurnoDTO;
 import com.proyectointegrador.clinicaOdontologica.service.Impl.TurnoServiceImpl;
 import org.apache.log4j.Logger;
@@ -42,6 +41,12 @@ public class TurnoController {
     public ResponseEntity<List<TurnoDTO>> buscarTodos() throws ResourceNotFoundException {
         log.debug("Buscando todos los turnos...");
         return ResponseEntity.ok(turnoService.buscarTodos());
+    }
+
+    @GetMapping("/proximaSemana")
+    public ResponseEntity<List<?>> buscarProximaSemana() throws ResourceNotFoundException {
+        log.debug("Buscando todos los turnos de la próxima semana...");
+        return ResponseEntity.ok(turnoService.buscarTurnosProxSemana());
     }
 
     @PutMapping
