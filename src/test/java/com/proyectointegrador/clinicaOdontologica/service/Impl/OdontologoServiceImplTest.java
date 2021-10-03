@@ -25,13 +25,13 @@ class OdontologoServiceImplTest {
     @Autowired
     private IOdontologoRepository repository;
 
-    private OdontologoDTO o = new OdontologoDTO();
+    private OdontologoDTO odontologoDto = new OdontologoDTO();
 
     public void cargarDataSet () throws ResourceNotFoundException {
-        o.setNombre("Simon");
-        o.setApellido("Simonian");
-        o.setMatricula(1234);
-        odontologoService.guardar(o);
+        odontologoDto.setNombre("Kevin");
+        odontologoDto.setApellido("Sangregorio");
+        odontologoDto.setMatricula(123456789);
+        odontologoService.guardar(odontologoDto);
     }
 
     @Test

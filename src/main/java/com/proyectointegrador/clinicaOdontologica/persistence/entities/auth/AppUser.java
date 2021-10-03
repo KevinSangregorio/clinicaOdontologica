@@ -1,4 +1,4 @@
-package com.proyectointegrador.clinicaOdontologica.persistence.entities;
+package com.proyectointegrador.clinicaOdontologica.persistence.entities.auth;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,14 +18,13 @@ public class AppUser implements UserDetails {
     @Id
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-    private long id;
+    private Integer id;
     private String name;
     private String username;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-
 
     public AppUser() {
     }
@@ -43,16 +42,6 @@ public class AppUser implements UserDetails {
         SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(appUserRole.name());
 
         return Collections.singletonList(grantedAuthority);
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
     }
 
     @Override
